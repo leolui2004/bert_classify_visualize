@@ -58,3 +58,35 @@ So it seems that simply implementing a pre-trained model with a little bit fine-
 ## Reference
 Twitter日本語評判分析データセット
 http://www.db.info.gifu-u.ac.jp/data/Data_5d832973308d57446583ed9f
+
+## Addition Part
+Today just found another dataset which contains livedoor news content with different categories. I selected 6 of them, just pick the topic of each news and label by category. And the number of samples for each category is quite evenly distributed (e.g. 871, 865, 871, 843, 829, 901).
+
+This time two different tests were done, one is just same as before, the second one I added 3 additional layers to the fine-tuning part, a 0.3 Dropout, a 64-unit Dense with relu, and a 0.3 Dropout. It is sad that because just after 3 epoch the test accuracy is already over 90%, adding more layers cannot see any improvement, but at least I tested on it and it seems work without any problem.
+
+Respective file: livedoor_preprocess.py, livedoor_bert.py
+
+No additional fine-tuning layer
+```
+Epoch 1/3
+162/162 [==============================] - 21s 131ms/step - loss: 0.8841 - acc: 0.6622
+Epoch 2/3
+162/162 [==============================] - 21s 131ms/step - loss: 0.3737 - acc: 0.8685
+Epoch 3/3
+162/162 [==============================] - 21s 131ms/step - loss: 0.1611 - acc: 0.9459
+Accuracy: 0.9936
+```
+
+With additional fine-tuning layer
+```
+Epoch 1/3
+162/162 [==============================] - 21s 131ms/step - loss: 1.1912 - acc: 0.5239
+Epoch 2/3
+162/162 [==============================] - 21s 131ms/step - loss: 0.6025 - acc: 0.7772
+Epoch 3/3
+162/162 [==============================] - 21s 132ms/step - loss: 0.3497 - acc: 0.8894
+Accuracy: 0.9562
+```
+
+For reference, the dataset can be found here:
+https://www.rondhuit.com/download.html
